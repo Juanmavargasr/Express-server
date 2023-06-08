@@ -1,31 +1,8 @@
 const express = require("express");
+const { completedTask, checkParams } = require("./list-view-controllers");
+
 const listViewRouter = express.Router();
 
-module.exports = (tasklist) => {
-  // Exporta una función que recibe tasklist como parámetro
-  listViewRouter.get("/completed", (req, res) => {
-    const completedTasks = tasklist.filter((task) => task.isCompleted === true);
-    res.json(completedTasks);
-  });
+listViewRouter.get("/status", checkParams, completedTask);
 
-  listViewRouter.get("/incomplete", (req, res) => {
-    const incompleteTasks = tasklist.filter(
-      (task) => task.isCompleted === false
-    );
-    res.json(incompleteTasks);
-  });
-
-  return listViewRouter;
-};
-
-// listViewRouter.get("/completed", (req, res) => {
-//   const completedTasks = tasklist.filter((task) => task.isCompleted === true);
-//   res.json(completedTasks);
-// });
-
-// listViewRouter.get("/incomplete", (req, res) => {
-//   const incompleteTasks = tasklist.filter((task) => task.isCompleted === false);
-//   res.json(incompleteTasks);
-// });
-
-// module.exports = listViewRouter;
+module.exports = listViewRouter;
