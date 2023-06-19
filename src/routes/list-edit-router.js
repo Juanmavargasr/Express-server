@@ -6,13 +6,14 @@ const {
   putListEdit,
   checkInfo,
   getListEditId,
-} = require("./list-edit-controllers");
+  midJwtValidation,
+} = require("../controllers/list-edit-controllers");
 // const { tasklist } = require("../proyecto-integrador-Express-1/tasklist");
 
 const listEditRouter = express.Router();
 
 listEditRouter.post("/", checkInfo, postListEdit);
-listEditRouter.get("/", getListEdit);
+listEditRouter.get("/", midJwtValidation, getListEdit);
 listEditRouter.get("/:id", getListEditId);
 listEditRouter.delete("/:id", deleteListEdit);
 listEditRouter.put("/:id", checkInfo, putListEdit);

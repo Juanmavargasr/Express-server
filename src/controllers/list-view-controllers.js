@@ -1,4 +1,4 @@
-const tasklist = require("./tasklist.json");
+const tasklist = require("../tasklist.json");
 
 //CON QUERY
 const checkParams = (req, res, next) => {

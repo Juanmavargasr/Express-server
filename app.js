@@ -1,13 +1,15 @@
 const express = require("express");
-const tasklist = require("./tasklist.json");
-const port = 3000;
+const tasklist = require("./src/tasklist.json");
+const port = 3002;
 const app = express();
+app.use(express.json());
 
-const listViewRouter = require("./list-view-router");
-const listEditRouter = require("./list-edit-router");
+const listViewRouter = require("./src/routes/list-view-router");
+const listEditRouter = require("./src/routes/list-edit-router");
+const loginRouter = require("./src/routes/login-router");
 
 app.listen(port, () => {
-  console.log(`server listening in port ${3000}`);
+  console.log(`server listening in port ${port}`);
 });
 
 app.use(express.json());
@@ -26,13 +28,15 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/login", loginRouter);
+
 app.use("/list-edit", listEditRouter);
 
 app.use("/list-view", listViewRouter);
 
-app.use("*", (req, res) => {
-  res.status(404).send("Error 404: Ruta no encontrada");
-});
+// app.use("*", (req, res) => {
+//   res.status(404).send("Error 404: Ruta no encontrada");
+// });
 
 app.get("/", (req, res) => {
   res.json("Hello to tasklist app, go to /list-edit for check");

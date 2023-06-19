@@ -1,4 +1,5 @@
-const tasklist = require("./tasklist.json");
+const tasklist = require("../tasklist.json");
+const jwt = require("jsonwebtoken");
 
 const checkInfo = async (req, res, next) => {
   try {
@@ -58,6 +59,27 @@ const putListEdit = (req, res) => {
   }
 };
 
+const midJwtValidation = (req, res, next) => {
+  try {
+    const accessToken = req.headers["authorization"];
+    if (!accessToken) {
+      res.status(401).json({ error: "User is not loggedIn, please relog" });
+    }
+
+    /*Ojo, queda pendiente configurar la variable de entorno trayéndola desde .env
+    porque no sé como traerla desde una carpeta externa, por el momento el secreto
+    se deja escrito*/
+    jwt.verify(accessToken, "process.env.SECRET_KEY", (err, user) => {
+      if (err) {
+        res.send("access denied, token incorrect or expired");
+      }
+      next();
+    });
+  } catch (error) {
+    res.status(500).json({ error: "error checking user" });
+  }
+};
+
 module.exports = {
   postListEdit,
   getListEdit,
@@ -65,4 +87,5 @@ module.exports = {
   putListEdit,
   checkInfo,
   getListEditId,
+  midJwtValidation,
 };

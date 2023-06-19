@@ -1,5 +1,8 @@
 const express = require("express");
-const { completedTask, checkParams } = require("./list-view-controllers");
+const {
+  completedTask,
+  checkParams,
+} = require("../controllers/list-view-controllers");
 
 const listViewRouter = express.Router();
 
