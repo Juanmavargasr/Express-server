@@ -4,8 +4,10 @@ const {
   checkParams,
 } = require("../controllers/list-view-controllers");
 
+const { midJwtValidation } = require("../controllers/list-edit-controllers");
+
 const listViewRouter = express.Router();
 
-listViewRouter.get("/status", checkParams, completedTask);
+listViewRouter.get("/status", midJwtValidation, checkParams, completedTask);
 
 module.exports = listViewRouter;
